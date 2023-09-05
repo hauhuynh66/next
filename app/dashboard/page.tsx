@@ -1,9 +1,24 @@
-import Image from 'next/image'
+import { StatsRing, StatsRingProps } from "../components/Card";
 
-export default function Dashboard() {
-  return (
-    <div>
-      <h1>This is a Dashboard</h1>
-    </div>
-  )
+export const metadata = {
+    title : "Dashboard"
 }
+
+async function getData() : Promise<StatsRingProps[]> {
+    return []
+}
+
+const Dashboard = async () => {
+    const data = await getData();
+    return ( 
+        <div>
+            {
+                data.map((ring, index)=> {
+                    return <StatsRing data={[]} key={index}/>
+                })
+            }
+        </div> 
+    );
+}
+ 
+export default Dashboard;

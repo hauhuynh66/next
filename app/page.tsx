@@ -1,11 +1,16 @@
-import Image from 'next/image'
-import Card from './components/Card'
+import { Carousel } from "./components/Carousel";
 
-export default function HomePage() {
+export const metadata = {
+  title : "Home Page"
+}
+
+function HomePage() {
+  
   return (
     <div>
-      <Card />
-      <h1 className='text-3xl'>HomePage</h1>
+      <Carousel/>
     </div>
   )
 }
+ 
+export default HomePage

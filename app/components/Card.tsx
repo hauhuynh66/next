@@ -1,20 +1,57 @@
-const Card = () => {
-    return ( 
-        <div className="max-w-sm rounded overflow-hidden shadow-lg">
-            {/* <img className="w-full" src="/img/card-top.jpg" alt="Sunset in the mountains"></img> */}
-            <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2">The Coldest Sunset</div>
-                <p className="text-gray-700 text-base">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-                </p>
-            </div>
-            <div className="px-6 pt-4 pb-2">
-                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
-            </div>
-        </div>
-    );
+"use client"
+
+import { RingProgress, Text, SimpleGrid, Paper, Center, Group } from '@mantine/core';
+import { IconArrowUpRight, IconArrowDownRight } from '@tabler/icons-react';
+
+export interface StatsRingProps {
+  data: {
+    label: string;
+    stats: string;
+    progress: number;
+    color: string;
+    icon: 'up' | 'down';
+  }[];
 }
- 
-export default Card;
+
+const icons = {
+  up: IconArrowUpRight,
+  down: IconArrowDownRight,
+};
+
+export function StatsRing({ data }: StatsRingProps) {
+  const stats = data.map((stat) => {
+    const Icon = icons[stat.icon];
+    return (
+      <Paper withBorder radius="md" p="xs" key={stat.label}>
+        <Group>
+          <RingProgress
+            size={80}
+            roundCaps
+            thickness={8}
+            sections={[{ value: stat.progress, color: stat.color }]}
+            label={
+              <Center>
+                <Icon size="1.4rem" stroke={1.5} />
+              </Center>
+            }
+          />
+
+          <div>
+            <Text color="dimmed" size="xs" transform="uppercase" weight={700}>
+              {stat.label}
+            </Text>
+            <Text weight={700} size="xl">
+              {stat.stats}
+            </Text>
+          </div>
+        </Group>
+      </Paper>
+    );
+  });
+
+  return (
+    <SimpleGrid cols={3} breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
+      {stats}
+    </SimpleGrid>
+  );
+}
